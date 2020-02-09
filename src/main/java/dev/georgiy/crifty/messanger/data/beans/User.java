@@ -13,6 +13,10 @@ public class User {
         this.id = userId;
     }
 
+    public String getId() {
+        return id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
