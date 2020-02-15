@@ -1,7 +1,9 @@
 package dev.georgiy.crifty.messanger.data.inmemory;
 
+import dev.georgiy.crifty.messanger.data.MessageStorage;
 import dev.georgiy.crifty.messanger.data.UserStorage;
 import dev.georgiy.crifty.messanger.data.beans.User;
+import dev.georgiy.crifty.messanger.services.message.beans.Message;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -34,4 +36,5 @@ public class UserStorageImpl implements UserStorage {
         UserBucket bucket = buckets.get(new User(userId));
         return bucket!=null && bucket.isValidToken(token);
     }
+
 }

@@ -4,6 +4,8 @@ import dev.georgiy.crifty.messanger.data.beans.User;
 import dev.georgiy.crifty.messanger.services.message.beans.Message;
 
 public interface MessageStorage {
-    void addMessage(Message message, User receiver);
+    void addMessage(Message message, User sender,  User receiver);
     void getMessages(String lastId, User sender, User receiver);
+    void getMessages(User sender, User receiver);
+    void getMessages(User receiver);
 }

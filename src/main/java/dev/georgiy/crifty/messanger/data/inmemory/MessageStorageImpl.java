@@ -11,13 +11,24 @@ public class MessageStorageImpl implements MessageStorage {
     @Autowired
     UserStorage userStorage;
 
+
     @Override
-    public void addMessage(Message message, User receiver) {
+    public void addMessage(Message message, User sender, User receiver) {
 
     }
 
     @Override
     public void getMessages(String lastId, User sender, User receiver) {
+
+    }
+
+    @Override
+    public void getMessages(User sender, User receiver) {
+
+    }
+
+    @Override
+    public void getMessages(User receiver) {
 
     }
 }

@@ -9,6 +9,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class UserBucket {
+    //from user, messages
     private Map<User, MessageBucket> buckets = new ConcurrentHashMap<>();
     private Set<String> tokens = ConcurrentHashMap.newKeySet();
 
