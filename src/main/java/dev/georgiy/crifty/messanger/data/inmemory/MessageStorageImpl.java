@@ -6,6 +6,8 @@ import dev.georgiy.crifty.messanger.data.beans.User;
 import dev.georgiy.crifty.messanger.services.message.beans.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 public class MessageStorageImpl implements MessageStorage {
 
     @Autowired
@@ -18,17 +20,17 @@ public class MessageStorageImpl implements MessageStorage {
     }
 
     @Override
-    public void getMessages(String lastId, User sender, User receiver) {
-
+    public List<Message> getMessages(String lastId, User sender, User receiver) {
+        return null;
     }
 
     @Override
-    public void getMessages(User sender, User receiver) {
-
+    public List<Message> getMessages(User sender, User receiver) {
+        return null;
     }
 
     @Override
-    public void getMessages(User receiver) {
-
+    public List<Message> getMessages(User receiver) {
+        return null;
     }
 }
