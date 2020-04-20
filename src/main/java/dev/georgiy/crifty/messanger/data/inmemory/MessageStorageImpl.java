@@ -5,9 +5,12 @@ import dev.georgiy.crifty.messanger.data.UserStorage;
 import dev.georgiy.crifty.messanger.data.beans.User;
 import dev.georgiy.crifty.messanger.services.message.beans.Message;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import java.util.List;
+import java.util.Map;
 
+@Controller
 public class MessageStorageImpl implements MessageStorage {
 
     @Autowired
@@ -30,7 +33,7 @@ public class MessageStorageImpl implements MessageStorage {
     }
 
     @Override
-    public List<Message> getMessages(User receiver) {
-        return null;
+    public Map<User, MessageBucket> getMessages(User receiver) {
+        return userStorage.getBucket(receiver).getBuckets();
     }
 }

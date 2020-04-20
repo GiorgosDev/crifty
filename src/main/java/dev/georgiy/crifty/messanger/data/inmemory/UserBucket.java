@@ -19,6 +19,10 @@ public class UserBucket {
         return token;
     }
 
+    public Map<User, MessageBucket> getBuckets() {
+        return buckets;
+    }
+
     public boolean isValidToken(String token){
         return tokens.contains(token);
     }

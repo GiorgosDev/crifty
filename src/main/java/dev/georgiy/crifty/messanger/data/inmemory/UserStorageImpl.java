@@ -4,10 +4,12 @@ import dev.georgiy.crifty.messanger.data.MessageStorage;
 import dev.georgiy.crifty.messanger.data.UserStorage;
 import dev.georgiy.crifty.messanger.data.beans.User;
 import dev.georgiy.crifty.messanger.services.message.beans.Message;
+import org.springframework.stereotype.Controller;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Controller
 public class UserStorageImpl implements UserStorage {
     private Map<User, UserBucket> buckets = new ConcurrentHashMap<>();
 
@@ -35,6 +37,11 @@ public class UserStorageImpl implements UserStorage {
     public boolean isRegistered(String userId, String token) {
         UserBucket bucket = buckets.get(new User(userId));
         return bucket!=null && bucket.isValidToken(token);
+    }
+
+    @Override
+    public UserBucket getBucket(User user) {
+        return buckets.get(user);
     }
 
 }
