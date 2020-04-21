@@ -12,4 +12,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public class MessageBucket {
 
     private List<Message> buckets = Collections.synchronizedList(new ArrayList<>());
+
+    public void addMessage(Message message){
+        buckets.add(message);
+    }
 }

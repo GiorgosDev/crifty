@@ -41,6 +41,7 @@ public class UserStorageImpl implements UserStorage {
 
     @Override
     public UserBucket getBucket(User user) {
+        //todo check if exists
         return buckets.get(user);
     }
 

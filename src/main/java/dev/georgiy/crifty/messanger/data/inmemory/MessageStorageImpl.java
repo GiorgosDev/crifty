@@ -14,11 +14,16 @@ import java.util.Map;
 public class MessageStorageImpl implements MessageStorage {
 
     @Autowired
-    UserStorage userStorage;
+    private UserStorage userStorage;
 
 
     @Override
     public void addMessage(Message message, User sender, User receiver) {
+        UserBucket receiverBucket = userStorage.getBucket(receiver);
+        Map<User, MessageBucket> buckets = receiverBucket.getBuckets();
+        buckets.putIfAbsent(sender, new MessageBucket());
+        MessageBucket bucket = buckets.get(sender);
+        bucket.addMessage(message);
 
     }
 
@@ -35,5 +40,13 @@ public class MessageStorageImpl implements MessageStorage {
     @Override
     public Map<User, MessageBucket> getMessages(User receiver) {
         return userStorage.getBucket(receiver).getBuckets();
+    }
+
+    public UserStorage getUserStorage() {
+        return userStorage;
+    }
+
+    public void setUserStorage(UserStorage userStorage) {
+        this.userStorage = userStorage;
     }
 }
