@@ -16,4 +16,9 @@ public class MessageBucket {
     public void addMessage(Message message){
         buckets.add(message);
     }
+
+    public List<Message> getBuckets() {
+        return buckets;
+    }
+
 }

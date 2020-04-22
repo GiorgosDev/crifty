@@ -8,28 +8,43 @@ import dev.georgiy.crifty.messanger.data.inmemory.UserStorageImpl;
 import dev.georgiy.crifty.messanger.services.message.beans.Message;
 import dev.georgiy.crifty.messanger.services.user.UserService;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
 public class MessageStorageTest {
-    @Test
-    public void addMessageTest() {
-        MessageStorageImpl storage = new MessageStorageImpl();
-        UserStorage userStorage = new UserStorageImpl();
-        User user = new User();
-        String id = user.getId();
+    MessageStorageImpl storage;
+    UserStorage userStorage;
+    User user;
+    String id;
+
+    @BeforeEach
+    public void init(){
+        storage = new MessageStorageImpl();
+        userStorage = new UserStorageImpl();
+        user = new User();
+        id = user.getId();
         userStorage.addUser(user);
         storage.setUserStorage(userStorage);
+    }
+
+
+    @Test
+    public void addMessageTest() {
+        //todo simplify api to use user id instead of user object
         storage.addMessage(new Message("aaa", id,"message1", LocalDateTime.now()), new User("aaa"), new User(id));
         Assertions.assertEquals(1, storage.getMessages(new User(id)).size());
     }
 
     @Test
     public void getMessagesTest() {
-        MessageStorageImpl storage = new MessageStorageImpl();
-        storage.setUserStorage(new UserStorageImpl());
-        storage.addMessage(new Message("aaa", "bbb","message1", LocalDateTime.now()), new User("aaa"), new User("bbb"));
-        storage.getMessages(new User("bbb"));
+        //todo simplify api to get messages list (structure agnostic)
+        //todo simplify api to get last messages since time
+        //todo simplify api to get last n messages
+        //todo simplify api to get messages after message id
+        storage.addMessage(new Message("aaa", id,"message1", LocalDateTime.now()), new User("aaa"), new User(id));
+        Assertions.assertEquals(1, storage.getMessages(new User(id)).get(new User("aaa")).getBuckets().size());
     }
 }
