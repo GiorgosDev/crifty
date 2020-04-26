@@ -18,28 +18,29 @@ public class MessageStorageImpl implements MessageStorage {
 
 
     @Override
-    public void addMessage(Message message, User sender, User receiver) {
-        UserBucket receiverBucket = userStorage.getBucket(receiver);
+    public void addMessage(Message message, String sender, String receiver) {
+        UserBucket receiverBucket = userStorage.getBucket(new User(receiver));
         Map<User, MessageBucket> buckets = receiverBucket.getBuckets();
-        buckets.putIfAbsent(sender, new MessageBucket());
-        MessageBucket bucket = buckets.get(sender);
+        buckets.putIfAbsent(new User(sender), new MessageBucket());
+        MessageBucket bucket = buckets.get(new User(sender));
         bucket.addMessage(message);
-
     }
 
     @Override
-    public List<Message> getMessages(String lastId, User sender, User receiver) {
+    public List<Message> getMessages(String lastId, String sender, String receiver) {
         return null;
     }
 
     @Override
-    public List<Message> getMessages(User sender, User receiver) {
-        return null;
+    public List<Message> getMessages(String sender, String receiver) {
+        UserBucket userBucket = userStorage.getBucket(new User(receiver));
+        MessageBucket messageBucket = userBucket.getBuckets().getOrDefault(new User(sender), new MessageBucket());
+        return messageBucket.getBuckets();
     }
 
     @Override
-    public Map<User, MessageBucket> getMessages(User receiver) {
-        return userStorage.getBucket(receiver).getBuckets();
+    public Map<User, MessageBucket> getMessages(String receiver) {
+        return userStorage.getBucket(new User(receiver)).getBuckets();
     }
 
     public UserStorage getUserStorage() {

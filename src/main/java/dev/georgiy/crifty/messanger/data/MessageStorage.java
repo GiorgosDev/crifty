@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 public interface MessageStorage {
-    void addMessage(Message message, User sender,  User receiver);
-    List<Message> getMessages(String lastId, User sender, User receiver);
-    List<Message> getMessages(User sender, User receiver);
-    Map<User, MessageBucket> getMessages(User receiver);
+    void addMessage(Message message, String sender,  String receiver);
+    List<Message> getMessages(String lastId, String senderId, String receiverId);
+    List<Message> getMessages(String senderId, String receiverId);
+    Map<User, MessageBucket> getMessages(String receiverId);
 }
