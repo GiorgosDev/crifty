@@ -7,8 +7,10 @@ import dev.georgiy.crifty.messanger.services.message.beans.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 public class MessageStorageImpl implements MessageStorage {
@@ -29,6 +31,13 @@ public class MessageStorageImpl implements MessageStorage {
     @Override
     public List<Message> getMessages(String lastId, String sender, String receiver) {
         return null;
+    }
+
+    @Override
+    public List<Message> getMessages(String sender, String receiver, LocalDateTime from) {
+        UserBucket userBucket = userStorage.getBucket(new User(receiver));
+        MessageBucket messageBucket = userBucket.getBuckets().getOrDefault(new User(sender), new MessageBucket());
+        return messageBucket.getBuckets().parallelStream().filter(m -> m.getTimestamp().isAfter(from)).collect(Collectors.toList());
     }
 
     @Override

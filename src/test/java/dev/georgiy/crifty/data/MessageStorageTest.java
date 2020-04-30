@@ -10,6 +10,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 import java.util.List;
 
 public class MessageStorageTest {
@@ -37,11 +39,25 @@ public class MessageStorageTest {
 
     @Test
     public void getMessagesTest() {
-        //todo simplify api to get last messages since time
         //todo simplify api to get last n messages
         //todo simplify api to get messages after message id
         storage.addMessage(new Message("aaa", id,"message1", LocalDateTime.now()), "aaa", id);
         List<Message> messages = storage.getMessages( "aaa",id);
         Assertions.assertEquals(1, messages.size());
+    }
+
+    @Test
+    public void getMessagesFromDateTest() {
+
+        storage.addMessage(new Message("aaa", id,"message0", LocalDateTime.now()), "aaa", id);
+        storage.addMessage(new Message("aaa", id,"message1", LocalDateTime.now().minus(1, ChronoUnit.DAYS)), "aaa", id);
+        storage.addMessage(new Message("aaa", id,"message2", LocalDateTime.now().minus(2, ChronoUnit.DAYS)), "aaa", id);
+        storage.addMessage(new Message("aaa", id,"message3", LocalDateTime.now().minus(3, ChronoUnit.DAYS)), "aaa", id);
+        List<Message> messages = storage.getMessages( "aaa",id,LocalDateTime.now().minus(3, ChronoUnit.HOURS));
+        Assertions.assertEquals(1, messages.size());
+        messages = storage.getMessages( "aaa",id,LocalDateTime.now().minus(1, ChronoUnit.DAYS).minus(3, ChronoUnit.HOURS));
+        Assertions.assertEquals(2, messages.size());
+        messages = storage.getMessages( "aaa",id,LocalDateTime.now().minus(2, ChronoUnit.DAYS).minus(3, ChronoUnit.HOURS));
+        Assertions.assertEquals(3, messages.size());
     }
 }
