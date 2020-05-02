@@ -10,7 +10,7 @@ import java.util.Map;
 
 public interface MessageStorage {
     void addMessage(Message message, String sender,  String receiver);
-    List<Message> getMessages(String lastId, String senderId, String receiverId);
+    List<Message> getMessages(String senderId, String receiverId, String lastId);
     List<Message> getMessages(String sender, String receiver, LocalDateTime from);
     List<Message> getMessages(String senderId, String receiverId);
     Map<User, MessageBucket> getMessages(String receiverId);
