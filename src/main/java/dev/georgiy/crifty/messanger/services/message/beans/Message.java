@@ -1,6 +1,7 @@
 package dev.georgiy.crifty.messanger.services.message.beans;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.UUID;
 
 public class Message {
@@ -36,5 +37,21 @@ public class Message {
 
     public LocalDateTime getTimestamp() {
         return timestamp;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Message)) return false;
+        Message message = (Message) o;
+        return Objects.equals(getId(), message.getId()) &&
+                Objects.equals(getFrom(), message.getFrom()) &&
+                Objects.equals(getTo(), message.getTo()) &&
+                Objects.equals(getTimestamp(), message.getTimestamp());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getFrom(), getTo(), getTimestamp());
     }
 }

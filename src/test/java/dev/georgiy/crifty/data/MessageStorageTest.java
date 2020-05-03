@@ -79,4 +79,31 @@ public class MessageStorageTest {
         messages = storage.getMessages( "aaa",id,message3.getId());
         Assertions.assertEquals(3, messages.size());
     }
+
+    @Test
+    public void getMessagesLastLinitTest() {
+
+        Message message0 = new Message("aaa", id,"message0", LocalDateTime.now());
+        Message message1 = new Message("aaa", id,"message1", LocalDateTime.now().minus(1, ChronoUnit.DAYS));
+        Message message2 =new Message("aaa", id,"message2", LocalDateTime.now().minus(2, ChronoUnit.DAYS));
+        Message message3 =new Message("aaa", id,"message3", LocalDateTime.now().minus(3, ChronoUnit.DAYS));
+        storage.addMessage(message3,"aaa", id );
+        storage.addMessage(message2,"aaa", id );
+        storage.addMessage(message1,"aaa", id );
+        storage.addMessage(message0,"aaa", id );
+        List<Message> messages = storage.getMessages( "aaa",id,1);
+        Assertions.assertEquals(1, messages.size());
+        Assertions.assertEquals(message0, messages.get(0));
+        messages = storage.getMessages( "aaa",id,2);
+        Assertions.assertEquals(2, messages.size());
+        Assertions.assertEquals(message1, messages.get(0));
+        Assertions.assertEquals(message0, messages.get(1));
+        messages = storage.getMessages( "aaa",id,5);
+        Assertions.assertEquals(4, messages.size());
+        Assertions.assertEquals(message3, messages.get(0));
+        Assertions.assertEquals(message0, messages.get(3));
+
+
+
+    }
 }

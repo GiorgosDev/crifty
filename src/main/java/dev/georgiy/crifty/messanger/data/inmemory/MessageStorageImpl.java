@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -45,6 +44,15 @@ public class MessageStorageImpl implements MessageStorage {
         }
         if(lastIndex<messages.size()-1) res = messages.subList(lastIndex+1,messages.size());
         return res;
+    }
+
+    @Override
+    public List<Message> getMessages(String sender, String receiver, int lastLimit) {
+        UserBucket userBucket = userStorage.getBucket(new User(receiver));
+        MessageBucket messageBucket = userBucket.getBuckets().getOrDefault(new User(sender), new MessageBucket());
+        List<Message> messages = messageBucket.getBuckets();
+        List<Message> res = new ArrayList<>();
+        return lastLimit >= messages.size() ? messages : messages.subList(messages.size() - lastLimit,messages.size());
     }
 
     @Override
